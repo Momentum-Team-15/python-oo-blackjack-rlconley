@@ -20,8 +20,15 @@ RANK_VALUES = {
 
 
 class Game:
-    pass
+    # make a new deck of cards, which calls __init__() method
+    def __init__(self):
+        self.deck = Deck('Bicycle')
+        self.deck.shuffle()
+        self.player = Player()
+        self.dealer = Dealer()
 
+    def deal(self):
+        pass
 
 class Card:
     def __init__(self, suit, rank, value):
@@ -54,11 +61,6 @@ class Deck:
     def shuffle(self):
         random.shuffle(self.cards)
 
-# make a new deck of cards, which calls __init__() method
-deck = Deck('Bicycle')
-deck.shuffle()
-for card in deck.cards:
-    print(card)
 
 
 class Player:
