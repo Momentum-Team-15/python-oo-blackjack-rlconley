@@ -100,50 +100,82 @@ class Dealer:
     def __init__(self):
         self.hand = []
 
-
-new_game = Game()
 # instantiates the game, calls the __init__() method
 # check if dealer has 21
-
-if new_game.calculate_hand(new_game.dealer) == 21:
-    print('Dealer has blackjack!')
-    if new_game.calculate_hand(new_game.player) == 21:
-        print('Push')
-    else:
-        print(f'You lose with {new_game.calculate_hand(new_game.player)}')    
-
-elif new_game.calculate_hand(new_game.player) == 21:
-    print('Blackjack! You win!')
-
-while new_game.calculate_hand(new_game.dealer) < 17:
-    new_game.deal_card(new_game.dealer)
-    print('Dealer hits')
-    if new_game.calculate_hand(new_game.dealer) > 21:
-        print(f'Dealer busted with {new_game.calculate_hand(new_game.dealer)}!')
-        break
-    
-    elif new_game.calculate_hand(new_game.dealer) == 21:
-        print('Dealer has 21!')
-        break
-
-else:
-    print(f"Dealer's hand is: ")
-    [print(card) for card in new_game.dealer.hand]
-    # this list comprehension is shorthand for
-    # for card in new_game.dealer.hand:
-        # print(card)
-    print(f"Player's hand is: ")
-    [print(card) for card in new_game.player.hand]
-    choice = None
-    while choice != 's':
-        choice = input("Would you like to (h)it or (s)tay ").lower()
-        if choice == 'h':
-            new_game.deal_card(new_game.player)
-            print(f"Player's hand is: ")
-        elif choice == 's':
-            print("Player stays")
-            print(f"Player's hand is: ")
+def play_game():
+    if new_game.calculate_hand(new_game.dealer) == 21:
+        # dealer has blackjack
+        print('Dealer has blackjack!')
+        if new_game.calculate_hand(new_game.player) == 21:
+            # player also has blackjack
+            print('Push')
+            return
         else:
-            print("Please choose 'h' or 's'")
-    print(f"Player's hand is: ")
-    [print(card) for card in new_game.player.hand]
+            print(f'Player loses with {new_game.calculate_hand(new_game.player)}')
+            # player does not also have blackjack
+            return  
+    elif new_game.calculate_hand(new_game.player) == 21:
+        # dealer does not have blackjack but player does
+        print('Player wins with blackjack!')
+        return
+
+    # nobody has blackjack, only get here if we don't hit any of the 
+    # above return statements. This is the dealer's turn
+    while new_game.calculate_hand(new_game.dealer) < 17:
+        new_game.deal_card(new_game.dealer)
+        print('Dealer hits')
+        if new_game.calculate_hand(new_game.dealer) > 21:
+            print(f'Dealer busted with {new_game.calculate_hand(new_game.dealer)}!')
+            break
+        
+        elif new_game.calculate_hand(new_game.dealer) == 21:
+            print('Dealer has 21!')
+            break
+
+    # we reach here when the dealer has at least 17 but less than 21
+    else:
+        print(f"Dealer's hand is: ")
+        [print(card) for card in new_game.dealer.hand]
+        # this list comprehension is shorthand for
+        # for card in new_game.dealer.hand:
+            # print(card)
+        print(f"Player's hand is: ")
+        [print(card) for card in new_game.player.hand]
+        # player now chooses whether to hit or stay        
+        choice = None
+        while choice != 's':
+            choice = input("Would you like to (h)it or (s)tay ").lower()
+            if choice == 'h':
+                new_game.deal_card(new_game.player)
+                print(f"Player's hand is: ")
+                [print(card) for card in new_game.player.hand]
+                if new_game.calculate_hand(new_game.player) == 21:
+                    print("Player wins with 21!")
+                    break
+                elif new_game.calculate_hand(new_game.player) > 21:
+                    print("Player busts!")
+                    break
+
+            elif choice == 's':
+                print("Player stays")
+                print(f"Player's hand is: ")
+                [print(card) for card in new_game.player.hand]
+            else:
+                print("Please choose 'h' or 's'")
+        else: 
+            print(f"Dealer's hand is: ")
+            [print(card) for card in new_game.dealer.hand]
+            print(f"Player's hand is: ")
+            [print(card) for card in new_game.player.hand]
+            # determine if player has more points than dealer
+            dealer_points = new_game.calculate_hand(new_game.dealer)
+            player_points = new_game.calculate_hand(new_game.player)
+            if dealer_points > player_points:
+                print(f'Dealer wins with {dealer_points}. Player has {player_points}')
+            elif player_points > dealer_points:
+                print(f'Player wins with {player_points}. Dealer has {dealer_points}')
+            else:
+                print(f"It's a draw. Both have {dealer_points}")
+
+new_game = Game()
+play_game()
