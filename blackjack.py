@@ -121,9 +121,11 @@ while new_game.calculate_hand(new_game.dealer) < 17:
     new_game.deal_card(new_game.dealer)
     if new_game.calculate_hand(new_game.dealer) > 21:
         print(f'Dealer busted with {new_game.calculate_hand(new_game.dealer)}!')
+        break
     
     elif new_game.calculate_hand(new_game.dealer) == 21:
         print('Dealer has 21!')
+        break
 
 else:
     # this is a shorthand for a loop called a list comprehension
