@@ -46,8 +46,6 @@ class Game:
 
         print(f'There are now {len(self.deck.cards)} cards in the deck')
 
-
-
     def deal_card(self, participant):
         # take a card from the deck and put it in someone's hand
         card = self.deck.cards.pop()
@@ -119,6 +117,7 @@ elif new_game.calculate_hand(new_game.player) == 21:
 
 while new_game.calculate_hand(new_game.dealer) < 17:
     new_game.deal_card(new_game.dealer)
+    print('Dealer hits')
     if new_game.calculate_hand(new_game.dealer) > 21:
         print(f'Dealer busted with {new_game.calculate_hand(new_game.dealer)}!')
         break
@@ -128,6 +127,23 @@ while new_game.calculate_hand(new_game.dealer) < 17:
         break
 
 else:
-    # this is a shorthand for a loop called a list comprehension
-    print(f"Dealer's hand is: {new_game.dealer.hand}")
-
+    print(f"Dealer's hand is: ")
+    [print(card) for card in new_game.dealer.hand]
+    # this list comprehension is shorthand for
+    # for card in new_game.dealer.hand:
+        # print(card)
+    print(f"Player's hand is: ")
+    [print(card) for card in new_game.player.hand]
+    choice = None
+    while choice != 's':
+        choice = input("Would you like to (h)it or (s)tay ").lower()
+        if choice == 'h':
+            new_game.deal_card(new_game.player)
+            print(f"Player's hand is: ")
+        elif choice == 's':
+            print("Player stays")
+            print(f"Player's hand is: ")
+        else:
+            print("Please choose 'h' or 's'")
+    print(f"Player's hand is: ")
+    [print(card) for card in new_game.player.hand]
