@@ -1,4 +1,5 @@
 # Write your blackjack game here.
+from hashlib import new
 import random
 # Outline my classes
 SUITS = ['♥️', '♣️', '♦️','♠️']
@@ -6,7 +7,8 @@ RANK_VALUES = {
     'K': 10,
     'Q': 10,
     'J': 10,
-    'A': (11, 1),
+    'A': 11,
+    # TODO handle when A is 1
     2: 2,
     3: 3,
     4: 4,
@@ -26,9 +28,37 @@ class Game:
         self.deck.shuffle()
         self.player = Player()
         self.dealer = Dealer()
+        # deal 2 cards to dealer and player
+        self.deal_card(self.dealer)
+        self.deal_card(self.dealer)
+        self.deal_card(self.player)
+        self.deal_card(self.player)
 
-    def deal(self):
-        pass
+        print("The dealer's cards are: ")
+        for card in self.dealer.hand:
+            print(card)
+        print(f'This hand is worth {self.calculate_hand(self.dealer)}')
+
+        print("The player's cards are: ")
+        for card in self.player.hand:
+            print(card)
+        print(f'This hand is worth {self.calculate_hand(self.player)}')
+
+        print(f'There are now {len(self.deck.cards)} cards in the deck')
+
+
+
+    def deal_card(self, participant):
+        # take a card from the deck and put it in someone's hand
+        card = self.deck.cards.pop()
+        participant.hand.append(card)
+
+    def calculate_hand(self, participant):
+        total_points = 0
+        for card in participant.hand:
+            total_points += card.value
+        return total_points
+
 
 class Card:
     def __init__(self, suit, rank, value):
@@ -75,5 +105,4 @@ class Dealer:
 
 new_game = Game()
 # instantiates the game, calls the __init__() method
-for card in new_game.deck.cards:
-    print(card)
+# check if dealer
