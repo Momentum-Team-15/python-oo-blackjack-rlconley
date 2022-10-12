@@ -107,25 +107,25 @@ new_game = Game()
 # instantiates the game, calls the __init__() method
 # check if dealer has 21
 
-if new_game.dealer.calculate_hand == 21:
+if new_game.calculate_hand(new_game.dealer) == 21:
     print('Dealer has blackjack!')
-    if new_game.player.calculate_hand == 21:
+    if new_game.calculate_hand(new_game.player) == 21:
         print('Push')
     else:
-        print(f'You lose with {new_game.player.calculate_hand}')    
+        print(f'You lose with {new_game.calculate_hand(new_game.player)}')    
 
-elif new_game.player.calculate_hand == 21:
+elif new_game.calculate_hand(new_game.player) == 21:
     print('Blackjack! You win!')
 
-while new_game.dealer.calculate_hand < 17:
+while new_game.calculate_hand(new_game.dealer) < 17:
     new_game.deal_card(new_game.dealer)
-    if new_game.dealer.calculate_hand > 21:
-        print(f'Dealer busted with {new_game.dealer.calculate_hand}!')
+    if new_game.calculate_hand(new_game.dealer) > 21:
+        print(f'Dealer busted with {new_game.calculate_hand(new_game.dealer)}!')
     
-    elif new_game.dealer.calculate_hand == 21:
+    elif new_game.calculate_hand(new_game.dealer) == 21:
         print('Dealer has 21!')
 
-    else:
-        # this is a shorthand for a loop called a list comprehension
-        print(f"Dealer's hand is {[print(card) for card in new_game.dealer.hand]}")
+else:
+    # this is a shorthand for a loop called a list comprehension
+    print(f"Dealer's hand is: {new_game.dealer.hand}")
 
