@@ -105,4 +105,27 @@ class Dealer:
 
 new_game = Game()
 # instantiates the game, calls the __init__() method
-# check if dealer
+# check if dealer has 21
+
+if new_game.dealer.calculate_hand == 21:
+    print('Dealer has blackjack!')
+    if new_game.player.calculate_hand == 21:
+        print('Push')
+    else:
+        print(f'You lose with {new_game.player.calculate_hand}')    
+
+elif new_game.player.calculate_hand == 21:
+    print('Blackjack! You win!')
+
+while new_game.dealer.calculate_hand < 17:
+    new_game.deal_card(new_game.dealer)
+    if new_game.dealer.calculate_hand > 21:
+        print(f'Dealer busted with {new_game.dealer.calculate_hand}!')
+    
+    elif new_game.dealer.calculate_hand == 21:
+        print('Dealer has 21!')
+
+    else:
+        # this is a shorthand for a loop called a list comprehension
+        print(f"Dealer's hand is {[print(card) for card in new_game.dealer.hand]}")
+
