@@ -20,9 +20,9 @@ RANK_VALUES = {
 
 
 class Game:
-    # make a new deck of cards, which calls __init__() method
     def __init__(self):
         self.deck = Deck('Bicycle')
+        # make a new deck of cards, which calls __init__() method
         self.deck.shuffle()
         self.player = Player()
         self.dealer = Dealer()
@@ -40,7 +40,7 @@ class Card:
         return f'{self.rank} of {self.suit}'
 
 # example of building one card
-queen_of_hearts = Card('♥️', 'Q', 10)
+# queen_of_hearts = Card('♥️', 'Q', 10)
 # print(f'{queen_of_hearts} is worth {queen_of_hearts.value}')
 # build a whole deck
 
@@ -71,3 +71,9 @@ class Player:
 class Dealer:
     def __init__(self):
         self.hand = []
+
+
+new_game = Game()
+# instantiates the game, calls the __init__() method
+for card in new_game.deck.cards:
+    print(card)
