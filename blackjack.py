@@ -103,6 +103,7 @@ class Dealer:
 # instantiates the game, calls the __init__() method
 # check if dealer has 21
 def play_game():
+    # TODO make player go first
     if new_game.calculate_hand(new_game.dealer) == 21:
         # dealer has blackjack
         print('Dealer has blackjack!')
@@ -129,10 +130,10 @@ def play_game():
             break
         
         elif new_game.calculate_hand(new_game.dealer) == 21:
-            print('Dealer has 21!')
+            print('Dealer wins with 21!')
             break
 
-    # we reach here when the dealer has at least 17 but less than 21
+    # we reach here only if the dealer has at least 17 but less than 21
     else:
         print(f"Dealer's hand is: ")
         [print(card) for card in new_game.dealer.hand]
@@ -142,7 +143,7 @@ def play_game():
         print(f"Player's hand is: ")
         [print(card) for card in new_game.player.hand]
         # player now chooses whether to hit or stay        
-        choice = None
+        choice = ''
         while choice != 's':
             choice = input("Would you like to (h)it or (s)tay ").lower()
             if choice == 'h':
@@ -176,6 +177,6 @@ def play_game():
                 print(f'Player wins with {player_points}. Dealer has {dealer_points}')
             else:
                 print(f"It's a draw. Both have {dealer_points}")
-
+        
 new_game = Game()
 play_game()
